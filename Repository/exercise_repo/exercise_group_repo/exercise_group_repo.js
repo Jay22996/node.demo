@@ -78,7 +78,7 @@ class exercise_groupitemViewModel {
       var _id = req.params.id;
       var data = await exercise
         .findById(_id)
-        .populate("gym_id")
+        // .populate("gym_id")
         .populate("exercise_list.exercise_item_id");
       res.status(200).json({
         status: "group find",
