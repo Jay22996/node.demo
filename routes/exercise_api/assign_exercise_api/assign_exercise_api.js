@@ -5,7 +5,7 @@ const { assign_add, assign_perform, assign_show, assign_delete, assign_day_wise,
 
 
 //check assign or not
-router.get("/chaqeassign/:id",chack_assign)
+router.get("/chaqeassign/:id/:dd/:mm/:yy",chack_assign)
 
 //asssign exercise
 router.post("/assignexe/:id",assign_add)

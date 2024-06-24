@@ -13,10 +13,14 @@ class assign_exerciseViewModel {
         var user_id = req.params.id;
         var data = await assins.find({ user_id: user_id }).select({ date: 1 });
       
-        const currentDate = new Date();
-        const cday = currentDate.getDate();
-        const cmonth = currentDate.getMonth() + 1;
-        const cyear = currentDate.getFullYear();
+        // const currentDate = new Date();
+        // const cday = currentDate.getDate();
+        // const cmonth = currentDate.getMonth() + 1;
+        // const cyear = currentDate.getFullYear();
+        const cday = req.params.dd
+        const cmonth = req.params.mm
+        const cyear = req.params.yy
+
       
         var cdate = `${cday}/${cmonth}/${cyear}`;
       
