@@ -51,6 +51,7 @@ class user_auth_ViewModel {
           // Use async/await to make sendMail asynchronous
           await transporter.sendMail(mailOptions);
 
+          
           // Send response after email is sent
 
           res.status(200).json({
