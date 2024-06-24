@@ -7,6 +7,7 @@ var chalange = require("../../../Model/gymUserModel/ParticipateModel");
 
 var email2 = "";
 var password = "";
+var otp = "";
 class user_auth_ViewModel {
   verify = async (req, res) => {
     try {
@@ -29,6 +30,7 @@ class user_auth_ViewModel {
           lowerCaseAlphabets: false,
         });
         password = await bcrypt.hash(req.body.password, 10);
+        // console.log(password);
 
         try {
           const transporter = nodemailer.createTransport({

@@ -104,7 +104,7 @@ class user_ViewModel {
         .findById(id)
         .populate("user_data")
         .populate("gym_id");
-      console.log(data);
+      // console.log(data);
       res.status(200).json({
         status: "find user",
         data,
