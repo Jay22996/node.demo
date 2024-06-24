@@ -2,6 +2,7 @@ var invoice = require("../../../Model/gymUserModel/invoice");
 var gym1 = require("../../../Model/gymModel/Gymaddress");
 var gym = require("../../../Model/gymModel/gymmodel");
 var dayy = require("../../../Model/kasratModel/Daily_data");
+var userr = require("../../../Model/userModel/UserModel");
 var mongoose = require("mongoose");
 var Collection = require("../../../Model/gymModel/Collection");
 var ucard = require("../../../Model/gymUserModel/memberrew");
