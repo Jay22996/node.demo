@@ -43,7 +43,7 @@ class Routes {
 
     //for request
     this.inquiry_api = require("./../routes/request_api/inquiry_api/inquiry_api");
-    this.trainer_req_api = require("./../routes/request_api/inquiry_api/inquiry_api");
+    this.trainer_req_api = require("./../routes/request_api/trainer_req_api/trainer_req_api");
     this.user_req__api = require("./../routes/request_api/user_req__api/user_req__api");
 
     //for user
