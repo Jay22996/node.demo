@@ -17,9 +17,9 @@ router.get("/deleteassign/:id",assign_delete)
 // router.get("/assignexeshow/:id",assign_show)
 
 //show assign exercise day wise
-router.get("/assign_day_wise/:id/:day/:month/:year",assign_day_wise)
+router.get("/assigndaywise/:id/:day/:month/:year",assign_day_wise)
 
 //perform exercise (yes or no)
-router.post("/assign_perform/:id/:pid",assign_perform)
+router.post("/assignperform/:id/:pid",assign_perform)
 
 module.exports = router;

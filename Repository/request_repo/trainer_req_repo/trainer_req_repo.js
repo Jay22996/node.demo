@@ -66,7 +66,6 @@ class trainer_req_ViewModel {
     }
   };
   
-
   showreq = async (req, res) => {
     try {
       const gymid = req.params.id;
