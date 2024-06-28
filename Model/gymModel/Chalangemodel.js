@@ -8,7 +8,7 @@ var chalange_schema = new mongoose.Schema({
     chalange_name : {type : String},
     gym_id : {type: mongoose.Schema.Types.ObjectId,ref:'gym_detail'},
     chalange_group : {type : String},
-    date : {type:Date}
+    date : {type:Date,default: new Date()}
 })
 
 module.exports = mongoose. model('chalange_detail',chalange_schema);

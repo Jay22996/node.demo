@@ -3,7 +3,7 @@ const { addpost, showpost, like, unlike, fire, unfire, updatepost, deletepost } 
 var router = express.Router();
 
 //add post
-router.post("/addpost/:id", addpost);
+router.post("/addpost", addpost);
 
 //show post
 router.get("/showpost", showpost);

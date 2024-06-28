@@ -117,18 +117,44 @@ class invoice_ViewModel {
         ],
       });
 
-      if (find.length >= 1) {
-        res.status(200).json({
-          status: "user already is registered",
-          data: find,
+      if (find.length > 0) {
+        const result = {
+          email: false,
+          mobile_number: false
+        };
+        find.forEach((user) => {
+          if (user.email === req.body.email) {
+            result.email = true;
+          }
+          if (user.mobile_number === req.body.mobile_number) {
+            result.mobile_number = true;
+          }
         });
+        if (result.email && result.mobile_number) {
+          res.status(200).json({
+            status: "Email and Mobile Number are available",
+          });
+        } else if (result.email) {
+          res.status(200).json({
+            status: "Email is available",
+          });
+        } else if (result.mobile_number) {
+          res.status(200).json({
+            status: "Mobile Number is available",
+          });
+        }
       } else {
         var data1 = await user_data.create(req.body);
+        const lat = await gym.findById(req.params.id);
+        const latitude = lat.latitude
+        const longitude = lat.longitude
 
         var password = await bcrypt.hash(req.body.password, 10);
         req.body.password = password;
         var data2 = data1._id;
         req.body.user_data = data2;
+        req.body.latitude = latitude
+        req.body.longitude = longitude
         var datar = await userModel.create(req.body);
 
         var userid = datar._id;

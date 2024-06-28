@@ -29,10 +29,14 @@ var User_schema = new mongoose.Schema({
     longitude:{type:Number,default:0.0},
     e_number:{type : String},
     e_address:{type : String},
-    last_active_date:{type : Date},
-    last_seen:{type : Date},
+    last_active_date:{type : Date,default:new Date()},
+    last_seen:{type : Date,default:new Date()},
     ref:[{
         gym_id:{type: mongoose.Schema.Types.ObjectId,ref:'gym_detail'}
+    }],
+    certificate:[{
+        certificate_name:{type : String},
+        certificate_photo:{type : String}
     }]
 
 })

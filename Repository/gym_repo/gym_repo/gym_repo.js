@@ -4,6 +4,8 @@ var msg = require("../../../Model/gymModel/announcement_model");
 var list = require("../../../Model/gymModel/gym_visit_detail");
 var Collection = require("../../../Model/gymModel/Collection");
 var address = require("../../../Model/gymModel/Gymaddress");
+var gymdata = require("../../../Model/gymModel/gym_data");
+
 
 class gym_ViewModel {
   addgym = async (req, res) => {
@@ -24,11 +26,14 @@ class gym_ViewModel {
         county: req.body.county,
         gym_id: gym_id,
       };
+      var dataid = await gymdata.create(req.body)
       var data4 = await address.create(data2);
       var add = data4._id;
       req.body.address = add;
-      var data5 = await gym.findByIdAndUpdate(gym_id, req.body);
-      var data6 = await Collection.create({ gym_id: gym_id });
+      req.body.gym_data = dataid._id;
+      await gym.findByIdAndUpdate(gym_id, req.body);
+       await Collection.create({ gym_id: gym_id });
+
 
       res.status(200).json({
         status: "gym inserted",
@@ -66,7 +71,9 @@ class gym_ViewModel {
         .populate("address")
         .populate("gym_trainers.trainers")
         .populate("user_list.user_data")
-        .populate("rating.user_id");
+        .populate("gym_receptionist.receptionist")
+        .populate("rating.user_id")
+        .populate("gym_data");
 
       res.status(200).json({
         status: "gym updated",

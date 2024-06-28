@@ -5,6 +5,7 @@ var gym_schema = new mongoose.Schema({
     gym_number : {type : Number},
     time : {type : String},
     address:{type: mongoose.Schema.Types.ObjectId,ref:'gym_address'},
+    gym_data:{type: mongoose.Schema.Types.ObjectId,ref:'gym_data'},
     total_rating : {type:Number,default:1},
     averageRating:{type : Number,default:1.1},
     gym_trainers : [{

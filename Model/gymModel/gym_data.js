@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var User_data_schema = new mongoose.Schema({
+var gym_data = new mongoose.Schema({
   post: [
     {
       posts: { type: mongoose.Schema.Types.ObjectId, ref: "Post_detail" },
@@ -35,4 +35,5 @@ var User_data_schema = new mongoose.Schema({
     },
   ],
 });
-module.exports = mongoose.model("user_data", User_data_schema);
+
+module.exports = mongoose.model("gym_data", gym_data);
