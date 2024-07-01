@@ -60,6 +60,7 @@ class post_ViewModel {
           );
         }
       }else if(req.body.post_by === "gym"){
+        console.log("dfghjk");
         var data = await post.create(req.body);
         var postid = data._id;
         var id2 = data.gym_id;
@@ -110,20 +111,18 @@ class post_ViewModel {
 
 
 
-      if(req.body.Type === "tra"){
+      if(req.body.post_by === "tra"){
         await post.findByIdAndUpdate(postid, {
           $push: { gym_id: req.body.gym_id , trainer_id:req.body.trainer_id , user_id:req.body.user_id },
         });
-      }else{
-        if (req.body.post_by === "user"){
-          await post.findByIdAndUpdate(postid, {
-            $push: { user_id: req.body.user_id },
-          });
-        }else if(req.body.post_by === "gym"){
-          await post.findByIdAndUpdate(postid, {
-            $push: { gym_id: req.body.gym_id },
-          });
-        }
+      }else if (req.body.post_by === "user"){
+        await post.findByIdAndUpdate(postid, {
+          $push: { user_id: req.body.user_id },
+        });
+      }else if(req.body.post_by === "gym"){
+        await post.findByIdAndUpdate(postid, {
+          $push: { gym_id: req.body.gym_id },
+        });
       }
       res.status(200).json({
         status: "post inserted",
