@@ -13,7 +13,7 @@ class post_ViewModel {
       if (req.body.post_by === "user") {
         var data = await post.create(req.body);
         var postid = data._id;
-        var id2 = data._id;
+        var id2 = data.user_id;
 
         var data1 = await user.findById(id2);
         var userdataid = data1.user_data;
@@ -62,7 +62,7 @@ class post_ViewModel {
       }else if(req.body.post_by === "gym"){
         var data = await post.create(req.body);
         var postid = data._id;
-        var id2 = data._id;
+        var id2 = data.gym_id;
         var data1 = await gym.findById(id2);
         var userdataid = data1.gym_data;
         var data2 = await gymdata.findByIdAndUpdate(
@@ -111,16 +111,16 @@ class post_ViewModel {
 
 
       if(req.body.Type === "tra"){
-        await post.findByIdAndUpdate(id2, {
+        await post.findByIdAndUpdate(postid, {
           $push: { gym_id: req.body.gym_id , trainer_id:req.body.trainer_id , user_id:req.body.user_id },
         });
       }else{
         if (req.body.post_by === "user"){
-          await post.findByIdAndUpdate(id2, {
+          await post.findByIdAndUpdate(postid, {
             $push: { user_id: req.body.user_id },
           });
         }else if(req.body.post_by === "gym"){
-          await post.findByIdAndUpdate(id2, {
+          await post.findByIdAndUpdate(postid, {
             $push: { gym_id: req.body.gym_id },
           });
         }
