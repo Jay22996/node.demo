@@ -6,6 +6,7 @@ const {
   followers,
   followersshow,
   unfollowers,
+  gymfollowersshow,
 } = require("../../../Repository/user_repo/user_repo/user_repo");
 
 exports.useradd = async (req, res) => {
@@ -30,6 +31,10 @@ exports.followers = async (req, res) => {
 
 exports.followersshow = async (req, res) => {
   followersshow(req, res);
+};
+
+exports.gymfollowersshow = async (req, res) => {
+  gymfollowersshow(req, res);
 };
 
 exports.unfollowers = async (req, res) => {

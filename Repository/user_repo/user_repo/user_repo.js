@@ -1,6 +1,8 @@
 var user_data = require("../../../Model/userModel/User_Data");
 var userModel = require("../../../Model/userModel/UserModel");
 var chalange = require("../../../Model/gymUserModel/ParticipateModel");
+var gymModel = require("../../../Model/gymModel/gymmodel");
+var gym_data = require("../../../Model/gymModel/gym_data");
 
 class user_ViewModel {
   useradd = async (req, res) => {
@@ -117,35 +119,156 @@ class user_ViewModel {
     }
   };
 
+  // followers = async (req, res) => {
+  //   try {
+  //     if (req.params.from === "gym") {
+  //       if (req.params.to === "gym") {
+  //         var _id = req.params.id;
+  //         var otherid = req.params.otherid;
+  //         var data = await gymModel.findById(_id);
+  //         var data5 = await gymModel.findById(otherid);
+  //         var data2 = data.gym_data;
+  //         var data6 = data5.gym_data;
+  //         var data8 = data._id;
+  //         var data9 = data5._id;
+
+  //         var data3 = await gym_data.findByIdAndUpdate(
+  //           { _id: data2 },
+  //           { $push: { following: { gym_id: data9 } } }
+  //         );
+  //         var data4 = await gym_data.findByIdAndUpdate(
+  //           { _id: data6 },
+  //           { $push: { followers: { gym_id: data8 } } }
+  //         );
+
+  //         res.status(200).json({
+  //           status: "add",
+  //           data: [data3, data4],
+  //         });
+  //       } else {
+  //         // req.body.to === "user"
+  //         var _id = req.params.id;
+  //         var otherid = req.params.otherid;
+  //         var data = await gymModel.findById(_id);
+  //         var data5 = await user_data.findById(otherid);
+  //         var data2 = data.gym_data;
+  //         var data6 = data5.user_data;
+  //         var data8 = data._id;
+  //         var data9 = data5._id;
+
+  //         var data3 = await gym_data.findByIdAndUpdate(
+  //           { _id: data2 },
+  //           { $push: { following: { user_id: data9 } } }
+  //         );
+  //         var data4 = await gym_data.findByIdAndUpdate(
+  //           { _id: data6 },
+  //           { $push: { followers: { gym_id: data8 } } }
+  //         );
+
+  //         res.status(200).json({
+  //           status: "add",
+  //           data: [data3, data4],
+  //         });
+  //       }
+  //     } else {
+  //       if (req.params.from === "user") {
+  //         var _id = req.params.id;
+  //         var otherid = req.params.otherid;
+  //         var data = await userModel.findById(_id);
+  //         var data5 = await userModel.findById(otherid);
+  //         var data2 = data.user_data;
+  //         var data6 = data5.user_data;
+  //         var data8 = data._id;
+  //         var data9 = data5._id;
+
+  //         var data3 = await user_data.findByIdAndUpdate(
+  //           { _id: data2 },
+  //           { $push: { following: { user_id: data9 } } }
+  //         );
+  //         var data4 = await user_data.findByIdAndUpdate(
+  //           { _id: data6 },
+  //           { $push: { followers: { user_id: data8 } } }
+  //         );
+  //         res.status(200).json({
+  //           status: "add",
+  //           data: [data3, data4],
+  //         });
+  //       } else {
+  //         // req.body.from === "gym"
+  //         var _id = req.params.id;
+  //         var otherid = req.params.otherid;
+  //         var data = await userModel.findById(_id);
+  //         var data5 = await gymModel.findById(otherid);
+  //         var data2 = data.user_data;
+  //         var data6 = data5.user_data;
+  //         var data8 = data._id;
+  //         var data9 = data5._id;
+
+  //         var data3 = await user_data.findByIdAndUpdate(
+  //           { _id: data2 },
+  //           { $push: { following: { gym_id: data9 } } }
+  //         );
+  //         var data4 = await gym_data.findByIdAndUpdate(
+  //           { _id: data6 },
+  //           { $push: { followers: { user_id: data8 } } }
+  //         );
+  //         res.status(200).json({
+  //           status: "add",
+  //           data: [data3, data4],
+  //         });
+  //       }
+  //     }
+  //   } catch (error) {
+  //     // console.error(error);
+  //   }
+  // };
+
+
   followers = async (req, res) => {
     try {
-      var _id = req.params.id;
-      var otherid = req.params.otherid;
-      var data = await userModel.findById(_id);
-      var data5 = await userModel.findById(otherid);
-      var data2 = data.user_data;
-      var data6 = data5.user_data;
-      var data8 = data._id;
-      var data9 = data5._id;
-
-      var data3 = await user_data.findByIdAndUpdate(
-        { _id: data2 },
-        { $push: { following: { followingg: data9 } } }
-      );
-      var data4 = await user_data.findByIdAndUpdate(
-        { _id: data6 },
-        { $push: { followers: { followerss: data8 } } }
-      );
-
+      const { from, to, id, otherid } = req.params;
+      let data, otherData, dataField, otherDataField;
+  
+      if (from === "gym") {
+        data = await gymModel.findById(id);
+        otherData = to === "gym" ? await gymModel.findById(otherid) : await userModel.findById(otherid);
+        dataField = data.gym_data;
+        otherDataField = to === "gym" ? otherData.gym_data : otherData.user_data;
+      } else if (from === "user") {
+        data = await userModel.findById(id);
+        otherData = to === "user" ? await userModel.findById(otherid) : await gymModel.findById(otherid);
+        dataField = data.user_data;
+        otherDataField = to === "user" ? otherData.user_data : otherData.gym_data;
+      }
+  
+      const followingUpdate = to === "gym" 
+        ? { gym_id: otherData._id } 
+        : { user_id: otherData._id };
+      const followersUpdate = from === "gym" 
+        ? { gym_id: data._id } 
+        : { user_id: data._id };
+  
+      const [updatedFollowing, updatedFollowers] = await Promise.all([
+        (from === "gym" ? gym_data : user_data).findByIdAndUpdate(
+          dataField, 
+          { $push: { following: followingUpdate } }
+        ),
+        (from === "gym" && to === "gym" ? gym_data : user_data).findByIdAndUpdate(
+          otherDataField, 
+          { $push: { followers: followersUpdate } }
+        )
+      ]);
+  
       res.status(200).json({
         status: "add",
-        data: [data3, data4],
+        data: [updatedFollowing, updatedFollowers]
       });
     } catch (error) {
-      // console.error(error);
+      console.error(error);
+      res.status(500).json({ status: "error", message: "Internal Server Error" });
     }
   };
-
+  
   followersshow = async (req, res) => {
     try {
       var id = req.params.id;
@@ -154,8 +277,10 @@ class user_ViewModel {
 
       var data1 = await user_data
         .findById(userdataid)
-        .populate("following.followingg")
-        .populate("followers.followerss")
+        .populate("followers.user_id")
+        .populate("followers.gym_id")
+        .populate("following.user_id")
+        .populate("following.gym_id")
         .populate("post.posts");
 
       res.status(200).json({
@@ -171,34 +296,107 @@ class user_ViewModel {
     }
   };
 
-  unfollowers = async (req, res) => {
+  gymfollowersshow = async (req, res) => {
     try {
-      var _id = req.params.id;
-      var otherid = req.params.otherid;
-      var data = await userModel.findById(_id);
-      var data5 = await userModel.findById(otherid);
-      var data2 = data.user_data;
-      var data6 = data5.user_data;
-      var data8 = data._id;
-      var data9 = data5._id;
+      var id = req.params.id;
+      var data = await gymModel.findById(id);
+      var userdataid = data.user_data;
 
-      var data3 = await user_data.findByIdAndUpdate(
-        { _id: data2 },
-        { $pull: { following: { followingg: data9 } } }
-      );
-      var data4 = await user_data.findByIdAndUpdate(
-        { _id: data6 },
-        { $pull: { followers: { followerss: data8 } } }
-      );
+      var data1 = await gym_data
+        .findById(userdataid)
+        .populate("followers.user_id")
+        .populate("followers.gym_id")
+        .populate("following.user_id")
+        .populate("following.gym_id")
+        .populate("post.posts");
 
       res.status(200).json({
-        status: "add",
-        data: [data3, data4],
+        status: "find",
+        data,
+        data1,
       });
     } catch (error) {
-      // console.error(error);
+      res.status(500).json({
+        status: "error",
+        message: error.message,
+      });
+    }
+  };
+
+  // unfollowers = async (req, res) => {
+  //   try {
+  //     var _id = req.params.id;
+  //     var otherid = req.params.otherid;
+  //     var data = await userModel.findById(_id);
+  //     var data5 = await userModel.findById(otherid);
+  //     var data2 = data.user_data;
+  //     var data6 = data5.user_data;
+  //     var data8 = data._id;
+  //     var data9 = data5._id;
+
+  //     var data3 = await user_data.findByIdAndUpdate(
+  //       { _id: data2 },
+  //       { $pull: { following: { followingg: data9 } } }
+  //     );
+  //     var data4 = await user_data.findByIdAndUpdate(
+  //       { _id: data6 },
+  //       { $pull: { followers: { followerss: data8 } } }
+  //     );
+
+  //     res.status(200).json({
+  //       status: "add",
+  //       data: [data3, data4],
+  //     });
+  //   } catch (error) {
+  //     // console.error(error);
+  //   }
+  // };
+
+  unfollowers = async (req, res) => {
+    try {
+      const { from, to, id, otherid } = req.params;
+      let data, otherData, dataField, otherDataField;
+  
+      if (from === "gym") {
+        data = await gymModel.findById(id);
+        otherData = to === "gym" ? await gymModel.findById(otherid) : await user_data.findById(otherid);
+        dataField = data.gym_data;
+        otherDataField = to === "gym" ? otherData.gym_data : otherData.user_data;
+      } else if (from === "user") {
+        data = await userModel.findById(id);
+        otherData = to === "user" ? await userModel.findById(otherid) : await gymModel.findById(otherid);
+        dataField = data.user_data;
+        otherDataField = to === "user" ? otherData.user_data : otherData.gym_data;
+      }
+  
+      const followingUpdate = to === "gym" 
+        ? { gym_id: otherData._id } 
+        : { user_id: otherData._id };
+      const followersUpdate = from === "gym" 
+        ? { gym_id: data._id } 
+        : { user_id: data._id };
+  
+      const [updatedFollowing, updatedFollowers] = await Promise.all([
+        (from === "gym" ? gym_data : user_data).findByIdAndUpdate(
+          dataField, 
+          { $pull: { following: followingUpdate } }
+        ),
+        (from === "gym" && to === "gym" ? gym_data : user_data).findByIdAndUpdate(
+          otherDataField, 
+          { $pull: { followers: followersUpdate } }
+        )
+      ]);
+  
+      res.status(200).json({
+        status: "add",
+        data: [updatedFollowing, updatedFollowers]
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: "error", message: "Internal Server Error" });
     }
   };
 }
+
 
 module.exports = new user_ViewModel();
