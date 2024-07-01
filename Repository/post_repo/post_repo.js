@@ -89,7 +89,7 @@ class post_ViewModel {
 
         const objectId = new mongoose.Types.ObjectId(id);
         var report = await dayy.findOne(objectId);
-        // console.log(report);
+        console.log(report);
         if (report == null) {
           req.body._id = id;
           req.body.like = 0;
@@ -127,9 +127,9 @@ class post_ViewModel {
       res.status(200).json({
         status: "post inserted",
         data2,
-        data3,
       });
     } catch (error) {
+      console.log(error.message);
       res.status(500).json({
         status: "error",
         message: error.message,
