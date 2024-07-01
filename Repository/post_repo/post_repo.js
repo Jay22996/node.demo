@@ -59,7 +59,7 @@ class post_ViewModel {
             { $inc: { post: 1 } }
           );
         }
-      }else if(req.body.post_by === "gym"){
+      } else if (req.body.post_by === "gym") {
         console.log("dfghjk");
         var data = await post.create(req.body);
         var postid = data._id;
@@ -109,20 +109,24 @@ class post_ViewModel {
         }
       }
 
-
-
-      if(req.body.post_by === "tra"){
+      if (req.body.post_by === "tra") {
         await post.findByIdAndUpdate(postid, {
-          $push: { gym_id: req.body.gym_id , trainer_id:req.body.trainer_id , user_id:req.body.user_id },
+          $push: {
+            gym_id: req.body.gym_id,
+            trainer_id: req.body.trainer_id,
+            user_id: req.body.user_id,
+          },
         });
-      }else if (req.body.post_by === "user"){
-        await post.findByIdAndUpdate(postid, {
-          $push: { user_id: req.body.user_id },
-        });
-      }else if(req.body.post_by === "gym"){
-        await post.findByIdAndUpdate(postid, {
-          $push: { gym_id: req.body.gym_id },
-        });
+      } else {
+        if (req.body.post_by === "user") {
+          await post.findByIdAndUpdate(postid, {
+            $push: { user_id: req.body.user_id },
+          });
+        } else if (req.body.post_by === "gym") {
+          await post.findByIdAndUpdate(postid, {
+            $push: { gym_id: req.body.gym_id },
+          });
+        }
       }
       res.status(200).json({
         status: "post inserted",
@@ -139,7 +143,11 @@ class post_ViewModel {
 
   showpost = async (req, res) => {
     try {
-      var data = await post.find().populate("user_id").populate("gym_id").populate("trainer_id");
+      var data = await post
+        .find()
+        .populate("user_id")
+        .populate("gym_id")
+        .populate("trainer_id");
       res.status(200).json({
         status: "like post",
         data,
@@ -302,30 +310,30 @@ class post_ViewModel {
       var id = req.params.id;
       var data = await post.findByIdAndDelete(id);
 
-      if(data.post_by === "user"){
+      if (data.post_by === "user") {
         var gym = data.user_id;
         var postid = data._id;
-  
+
         // var data3 = await chalange.findOneAndUpdate(
         //   { userid: userid },
         //   { $inc: { post: -1 } }
         // );
-  
+
         var data1 = await user.findById(gym);
         var userdataid = data1.user_data;
         var data3 = await userdata.findByIdAndUpdate(
           { _id: userdataid },
           { $pull: { post: { posts: postid } } }
         );
-      }else if (data.post_by === "gym"){
+      } else if (data.post_by === "gym") {
         var gym = data.gym_id;
         var postid = data._id;
-  
+
         // var data3 = await chalange.findOneAndUpdate(
         //   { userid: userid },
         //   { $inc: { post: -1 } }
         // );
-  
+
         var data1 = await gym.findById(gym);
         var userdataid = data1.gym_data;
         var data3 = await gymdata.findByIdAndUpdate(
