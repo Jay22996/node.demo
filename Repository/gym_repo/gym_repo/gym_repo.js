@@ -31,8 +31,8 @@ class gym_ViewModel {
       var add = data4._id;
       req.body.address = add;
       req.body.gym_data = dataid._id;
-      await gym.findByIdAndUpdate(gym_id, req.body);
-       await Collection.create({ gym_id: gym_id });
+     var user_datar = await gym.findByIdAndUpdate(gym_id, req.body);
+     var user_datar2 = await Collection.create({ gym_id: gym_id });
 
 
       res.status(200).json({

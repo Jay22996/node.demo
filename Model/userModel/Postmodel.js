@@ -14,7 +14,7 @@ var Post_schema = new mongoose.Schema({
       fires: { type: mongoose.Schema.Types.ObjectId, ref: "gym_detail" },
     },
   ],
-  date: { type: Date },
+  date: { type: Date,default:new Date() },
   let: { type: String },
   long: { type: String },
   thume_nail: { type: String },
