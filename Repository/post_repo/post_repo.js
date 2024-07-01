@@ -13,9 +13,8 @@ class post_ViewModel {
       if (req.body.post_by === "user") {
         var data = await post.create(req.body);
         var postid = data._id;
-        var id2 = data.user_id;
 
-        var data1 = await user.findById(id2);
+        var data1 = await user.findById(req.body.user);
         var userdataid = data1.user_data;
 
         var data2 = await userdata.findByIdAndUpdate(
@@ -63,8 +62,7 @@ class post_ViewModel {
         console.log("dfghjk");
         var data = await post.create(req.body);
         var postid = data._id;
-        var id2 = data.gym_id;
-        var data1 = await gym.findById(id2);
+        var data1 = await gym.findById(req.body.gym);
         var userdataid = data1.gym_data;
         var data2 = await gymdata.findByIdAndUpdate(
           { _id: userdataid },
