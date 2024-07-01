@@ -109,22 +109,22 @@ class post_ViewModel {
         }
       }
 
-      if (req.body.post_by === "tra") {
+      if (req.body.Type === "tra") {
         await post.findByIdAndUpdate(postid, {
           $push: {
-            gym_id: req.body.gym_id,
-            trainer_id: req.body.trainer_id,
-            user_id: req.body.user_id,
+            gym_id: req.body.gym,
+            trainer_id: req.body.trainer,
+            user_id: req.body.user,
           },
         });
       } else {
         if (req.body.post_by === "user") {
           await post.findByIdAndUpdate(postid, {
-            $push: { user_id: req.body.user_id },
+            $push: { user_id: req.body.user },
           });
         } else if (req.body.post_by === "gym") {
           await post.findByIdAndUpdate(postid, {
-            $push: { gym_id: req.body.gym_id },
+            $push: { gym_id: req.body.gym },
           });
         }
       }
