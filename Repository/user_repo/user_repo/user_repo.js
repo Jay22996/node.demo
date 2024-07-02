@@ -253,7 +253,7 @@ class user_ViewModel {
           dataField, 
           { $push: { following: followingUpdate } }
         ),
-        (from === "gym" && to === "gym" ? gym_data : user_data).findByIdAndUpdate(
+        (to === "gym" ? gym_data : user_data).findByIdAndUpdate(
           otherDataField, 
           { $push: { followers: followersUpdate } }
         )
@@ -381,7 +381,7 @@ class user_ViewModel {
           dataField, 
           { $pull: { following: followingUpdate } }
         ),
-        (from === "gym" && to === "gym" ? gym_data : user_data).findByIdAndUpdate(
+        ( to === "gym" ? gym_data : user_data).findByIdAndUpdate(
           otherDataField, 
           { $pull: { followers: followersUpdate } }
         )
