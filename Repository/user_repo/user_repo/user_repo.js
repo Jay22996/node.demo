@@ -300,7 +300,7 @@ class user_ViewModel {
     try {
       var id = req.params.id;
       var data = await gymModel.findById(id);
-      var userdataid = data.user_data;
+      var userdataid = data.gym_data;
 
       var data1 = await gym_data
         .findById(userdataid)
