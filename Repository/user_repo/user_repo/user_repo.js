@@ -359,7 +359,7 @@ class user_ViewModel {
   
       if (from === "gym") {
         data = await gymModel.findById(id);
-        otherData = to === "gym" ? await gymModel.findById(otherid) : await user_data.findById(otherid);
+        otherData = to === "gym" ? await gymModel.findById(otherid) : await userModel.findById(otherid);
         dataField = data.gym_data;
         otherDataField = to === "gym" ? otherData.gym_data : otherData.user_data;
       } else if (from === "user") {
@@ -381,7 +381,7 @@ class user_ViewModel {
           dataField, 
           { $pull: { following: followingUpdate } }
         ),
-        ( to === "gym" ? gym_data : user_data).findByIdAndUpdate(
+        (to === "gym" ? gym_data : user_data).findByIdAndUpdate(
           otherDataField, 
           { $pull: { followers: followersUpdate } }
         )
